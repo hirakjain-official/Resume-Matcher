@@ -361,6 +361,7 @@ def server_error(e):
     return render_template('500.html'), 500
 
 if __name__ == '__main__':
+    # Updated: Fixed gunicorn deployment issues
     # Get port from environment variable or default to 5000
     port = int(os.environ.get('PORT', 5000))
     # Use 0.0.0.0 for production hosting, 127.0.0.1 for local development

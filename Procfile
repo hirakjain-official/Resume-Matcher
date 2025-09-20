@@ -1,1 +1,1 @@
-web: python app.py
+web: exec python app.py
