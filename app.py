@@ -360,16 +360,17 @@ def not_found(e):
 def server_error(e):
     return render_template('500.html'), 500
 
+# Application factory pattern for gunicorn compatibility
+def create_app():
+    return app
+
 if __name__ == '__main__':
-    # Updated: Fixed gunicorn deployment issues
-    # Get port from environment variable or default to 5000
+    # Local development only - gunicorn will handle production
     port = int(os.environ.get('PORT', 5000))
-    # Use 0.0.0.0 for production hosting, 127.0.0.1 for local development
-    host = '0.0.0.0' if os.environ.get('PORT') else '127.0.0.1'
-    debug = os.environ.get('FLASK_ENV') != 'production'
+    host = '127.0.0.1'  # Local development
     
-    # Windows-specific configuration to avoid socket errors
-    if os.name == 'nt' and not os.environ.get('PORT'):  # Windows local development
-        app.run(debug=False, host='127.0.0.1', port=port, threaded=True, use_reloader=False)
-    else:  # Production or non-Windows
-        app.run(debug=debug, host=host, port=port, threaded=True)
+    # Windows-safe local development
+    if os.name == 'nt':  # Windows
+        app.run(debug=False, host=host, port=port, threaded=True, use_reloader=False)
+    else:  # Linux/Mac local development
+        app.run(debug=True, host=host, port=port, threaded=True)
