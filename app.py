@@ -144,22 +144,9 @@ def process_resumes_async(session_id, job_description, resume_files):
         
         processing_status.update_progress(session_id, 20, 'Processing resumes...')
         
-        # Process resumes using existing backend with timeout protection
-        import signal
-        
-        def timeout_handler(signum, frame):
-            raise TimeoutError("Processing timeout exceeded")
-        
-        # Set a timeout for the entire processing (30 minutes)
-        if os.name != 'nt':  # Unix systems
-            signal.signal(signal.SIGALRM, timeout_handler)
-            signal.alarm(1800)  # 30 minutes
-        
-        try:
-            results = process_resumes(job_description, resume_files)
-        finally:
-            if os.name != 'nt':  # Unix systems
-                signal.alarm(0)  # Cancel the alarm
+        # Process resumes using existing backend
+        # Note: Signal handling removed to fix threading issues on cloud platforms
+        results = process_resumes(job_description, resume_files)
         
         # Sort results by score
         sorted_results = sorted(results, key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0, reverse=True)
@@ -199,12 +186,21 @@ def process_resumes_async(session_id, job_description, resume_files):
         
         processing_status.complete_processing(session_id, final_results)
         
-    except TimeoutError as e:
-        logging.error(f"Processing timeout for session {session_id}: {str(e)}")
-        processing_status.set_error(session_id, "Processing timeout - please try with fewer resumes")
     except Exception as e:
-        logging.error(f"Error in async processing: {str(e)}")
-        processing_status.set_error(session_id, str(e))
+        error_msg = f"Error in async processing: {str(e)}"
+        logging.error(error_msg)
+        
+        # Provide user-friendly error messages
+        if "API" in str(e) or "401" in str(e) or "403" in str(e):
+            user_error = "API authentication error. Please check your API keys."
+        elif "timeout" in str(e).lower() or "connection" in str(e).lower():
+            user_error = "Network timeout. Please try again with fewer files."
+        elif "memory" in str(e).lower() or "RAM" in str(e).lower():
+            user_error = "Processing limit reached. Please try with fewer or smaller files."
+        else:
+            user_error = "Processing error occurred. Please try again."
+            
+        processing_status.set_error(session_id, user_error)
 
 @app.route('/')
 def index():
@@ -338,6 +334,19 @@ def send_contact_email():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204  # Return empty response with "No Content" status
+
+@app.route('/health')
+def health_check():
+    """Health check endpoint for cloud monitoring"""
+    return jsonify({
+        'status': 'healthy',
+        'timestamp': datetime.now().isoformat(),
+        'version': '1.0.0'
+    })
 
 @app.errorhandler(413)
 def too_large(e):
