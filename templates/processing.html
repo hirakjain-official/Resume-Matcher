@@ -1,0 +1,415 @@
+{% extends "base.html" %}
+
+{% block title %}Processing - Resume Matcher{% endblock %}
+
+{% block extra_css %}
+<style>
+    .processing-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 0;
+    }
+
+    .processing-card {
+        background: rgba(26, 26, 26, 0.9);
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        padding: 4rem;
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .processing-icon {
+        font-size: 5rem;
+        color: var(--primary-orange);
+        margin-bottom: 2rem;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.7; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .processing-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .processing-stage {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        min-height: 1.5rem;
+    }
+
+    .progress-container {
+        margin: 3rem 0;
+        position: relative;
+    }
+
+    .progress {
+        height: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .progress-bar {
+        background: var(--gradient-primary);
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 600;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .processing-steps {
+        text-align: left;
+        margin-top: 3rem;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .step:last-child {
+        border-bottom: none;
+    }
+
+    .step-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        background: var(--card-bg);
+        color: var(--text-muted);
+        border: 2px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .step.active .step-icon {
+        background: var(--gradient-primary);
+        color: white;
+        border-color: var(--primary-orange);
+        animation: pulse-active 1.5s ease-in-out infinite;
+    }
+
+    .step.completed .step-icon {
+        background: var(--primary-orange);
+        color: white;
+        border-color: var(--primary-orange);
+    }
+
+    @keyframes pulse-active {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    .step-text {
+        font-weight: 500;
+        color: var(--text-muted);
+        transition: color 0.3s ease;
+    }
+
+    .step.active .step-text,
+    .step.completed .step-text {
+        color: var(--text-light);
+    }
+
+    .estimated-time {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(255, 107, 53, 0.1);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 107, 53, 0.2);
+    }
+
+    .estimated-time i {
+        color: var(--primary-orange);
+        margin-right: 0.5rem;
+    }
+
+    .error-container {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+        background: rgba(220, 53, 69, 0.1);
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        border-radius: 15px;
+        margin-top: 2rem;
+    }
+
+    .error-icon {
+        font-size: 3rem;
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+
+    .retry-btn {
+        background: var(--gradient-primary);
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .processing-card {
+            padding: 2rem;
+            margin: 1rem;
+        }
+        
+        .processing-title {
+            font-size: 2rem;
+        }
+        
+        .processing-icon {
+            font-size: 4rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="processing-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="processing-card fade-in-up">
+                    <div class="processing-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    
+                    <h1 class="processing-title">AI Processing</h1>
+                    <p class="processing-stage" id="currentStage">Initializing...</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress">
+                            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                            <div class="progress-text" id="progressText">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="processing-steps">
+                        <div class="step" id="step1">
+                            <div class="step-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <div class="step-text">Processing uploaded files</div>
+                        </div>
+                        
+                        <div class="step" id="step2">
+                            <div class="step-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="step-text">Initializing AI models</div>
+                        </div>
+                        
+                        <div class="step" id="step3">
+                            <div class="step-icon">
+                                <i class="fas fa-file-text"></i>
+                            </div>
+                            <div class="step-text">Extracting text from resumes</div>
+                        </div>
+                        
+                        <div class="step" id="step4">
+                            <div class="step-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="step-text">Analyzing and matching candidates</div>
+                        </div>
+                        
+                        <div class="step" id="step5">
+                            <div class="step-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="step-text">Generating final report</div>
+                        </div>
+                    </div>
+                    
+                    <div class="estimated-time">
+                        <i class="fas fa-clock"></i>
+                        <strong>Estimated time:</strong> 2-3 minutes
+                        <br><small class="text-muted">Processing time depends on the number of resumes</small>
+                    </div>
+                    
+                    <div class="error-container" id="errorContainer">
+                        <div class="error-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>Processing Error</h4>
+                        <p id="errorMessage">Something went wrong during processing.</p>
+                        <a href="{{ url_for('index') }}" class="retry-btn">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sessionId = '{{ session_id }}';
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const currentStage = document.getElementById('currentStage');
+    const errorContainer = document.getElementById('errorContainer');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    const steps = {
+        1: { threshold: 20, element: document.getElementById('step1') },
+        2: { threshold: 30, element: document.getElementById('step2') },
+        3: { threshold: 50, element: document.getElementById('step3') },
+        4: { threshold: 80, element: document.getElementById('step4') },
+        5: { threshold: 95, element: document.getElementById('step5') }
+    };
+    
+    let currentStep = 1;
+    
+    function updateProgress(progress, stage) {
+        // Update progress bar
+        progressBar.style.width = progress + '%';
+        progressText.textContent = Math.round(progress) + '%';
+        
+        // Update stage text
+        currentStage.textContent = stage;
+        
+        // Update steps
+        Object.keys(steps).forEach(stepNum => {
+            const step = steps[stepNum];
+            if (progress >= step.threshold) {
+                step.element.classList.add('completed');
+                step.element.classList.remove('active');
+            } else if (progress >= step.threshold - 20) {
+                step.element.classList.add('active');
+                step.element.classList.remove('completed');
+            } else {
+                step.element.classList.remove('active', 'completed');
+            }
+        });
+    }
+    
+    function showError(error) {
+        errorMessage.textContent = error;
+        errorContainer.style.display = 'block';
+        
+        // Hide progress elements
+        document.querySelector('.progress-container').style.display = 'none';
+        document.querySelector('.processing-steps').style.display = 'none';
+        document.querySelector('.estimated-time').style.display = 'none';
+        
+        // Update title and icon
+        document.querySelector('.processing-title').textContent = 'Processing Failed';
+        document.querySelector('.processing-icon i').className = 'fas fa-exclamation-triangle';
+        document.querySelector('.processing-icon').style.color = '#dc3545';
+        document.querySelector('.processing-icon').style.animation = 'none';
+    }
+    
+    function checkStatus() {
+        fetch(`/status/${sessionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'processing') {
+                    updateProgress(data.progress || 0, data.stage || 'Processing...');
+                    setTimeout(checkStatus, 1000); // Check every second
+                } else if (data.status === 'completed') {
+                    updateProgress(100, 'Completed!');
+                    
+                    // Show completion animation
+                    setTimeout(() => {
+                        window.location.href = `/results/${sessionId}`;
+                    }, 1500);
+                    
+                } else if (data.status === 'error') {
+                    showError(data.error || 'An unknown error occurred');
+                } else if (data.status === 'not_found') {
+                    showError('Session not found. Please try uploading your files again.');
+                } else {
+                    setTimeout(checkStatus, 2000); // Check again in 2 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Status check error:', error);
+                showError('Connection error. Please check your internet connection.');
+            });
+    }
+    
+    // Start checking status
+    checkStatus();
+    
+    // Add some visual feedback
+    const processingIcon = document.querySelector('.processing-icon i');
+    let iconIndex = 0;
+    const icons = ['fas fa-brain', 'fas fa-cog', 'fas fa-robot', 'fas fa-search'];
+    
+    setInterval(() => {
+        iconIndex = (iconIndex + 1) % icons.length;
+        processingIcon.className = icons[iconIndex];
+    }, 3000);
+});
+</script>
+{% endblock %}

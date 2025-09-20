@@ -1,0 +1,55 @@
+2025-09-21 01:58:42,349 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-09-21 01:58:42,350 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-21 01:58:48,832 - INFO - 127.0.0.1 - - [21/Sep/2025 01:58:48] "GET /processing/2e26d3f9-c41b-4764-a8b7-1fd7808ace23 HTTP/1.1" 200 -
+2025-09-21 01:58:48,927 - INFO - 127.0.0.1 - - [21/Sep/2025 01:58:48] "GET /status/2e26d3f9-c41b-4764-a8b7-1fd7808ace23 HTTP/1.1" 200 -
+2025-09-21 01:58:51,518 - INFO - 127.0.0.1 - - [21/Sep/2025 01:58:51] "GET / HTTP/1.1" 200 -
+2025-09-21 01:59:11,715 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:11] "POST /upload HTTP/1.1" 200 -
+2025-09-21 01:59:11,779 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:11] "GET /processing/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:11,873 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:11] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:12,973 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:12] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:14,000 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:14] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:15,665 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:15] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:16,900 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:16] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:17,953 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:17] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:19,039 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:19] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:20,077 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:20] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:20,740 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:20,743 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:20,750 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:20,762 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:20,972 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:21,004 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:21,007 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:21,020 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:21,021 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:21,097 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:21,124 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:21,216 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:21,292 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:21] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:23,066 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:23] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:24,575 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:24] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:25,694 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:25] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:26,170 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:26,173 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:26,177 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:26,320 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:26,336 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:26,376 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:26,537 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:26,571 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:26,632 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:27,030 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:27] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:28,315 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:28] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:29,366 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:29,381 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:29,394 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:29,443 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:29,450 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:29,455 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:29,524 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:29] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:30,575 - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2025-09-21 01:59:30,581 - ERROR - Error in OpenRouter DeepSeek communication: Error code: 402 - {'error': {'message': 'This request requires more credits, or fewer max_tokens. You requested up to 4092 tokens, but can only afford 3030. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account', 'code': 402, 'metadata': {'provider_name': None}}, 'user_id': 'user_32ycAHzZ49P1GDkO0gagn1ncgHx'}
+2025-09-21 01:59:30,584 - INFO - Markdown file created: out\Unknown_unified.md
+2025-09-21 01:59:30,628 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:30] "GET /status/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
+2025-09-21 01:59:32,415 - INFO - 127.0.0.1 - - [21/Sep/2025 01:59:32] "GET /results/e3c8872b-ec97-4f95-bda4-d6100e5a0376 HTTP/1.1" 200 -
